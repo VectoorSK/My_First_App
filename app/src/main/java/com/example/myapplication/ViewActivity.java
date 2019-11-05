@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.myapplication.model.Pokemon;
 import com.example.myapplication.model.RetroPhoto;
 import com.example.myapplication.model.RetroPokemon;
 import com.example.myapplication.network.GetDataService;
@@ -80,30 +81,28 @@ public class ViewActivity extends AppCompatActivity {
 
         // Create handle for the RetrofitInstance interface
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-     // Call<List<RetroPokemon>> call = service.getAllPokemons();
-        Call<List<RetroPhoto>> call = service.getAllPhotos();
-        call.enqueue(new Callback<List<RetroPhoto>>() {
+        Call<RetroPokemon> call = service.getAllPokemons();
+        // Call<List<RetroPhoto>> call = service.getAllPhotos();
+        call.enqueue(new Callback<RetroPokemon>() {
             @Override
-            public void onResponse(Call<List<RetroPhoto>> call, Response<List<RetroPhoto>> response) {
-         // public void onResponse(Call<List<RetroPokemon>> call, Response<List<RetroPokemon>> response) {
+            // public void onResponse(Call<List<RetroPhoto>> call, Response<List<RetroPhoto>> response) {
+            public void onResponse(Call<RetroPokemon> call, Response<RetroPokemon> response) {
                 progressDialog.dismiss();
-                generateDataList(response.body());
+                generateDataList(response.body().getResults());
             }
 
             @Override
-            public void onFailure(Call<List<RetroPhoto>> call, Throwable t) {
-         // public void onFailure(Call<List<RetroPokemon>> call, Throwable t) {
-                System.out.println("__________________________________________");
-                System.out.println("error: " + t);
+            // public void onFailure(Call<List<RetroPhoto>> call, Throwable t) {
+            public void onFailure(Call<RetroPokemon> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(ViewActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ViewActivity.this, "Something went wrong... Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     //Method to generate List of data using RecyclerView with custom adapter
-    private void generateDataList(final List<RetroPhoto> list) {
- // private void generateDataList(final List<RetroPokemon> list) {
+    // private void generateDataList(final List<RetroPhoto> list) {
+    private void generateDataList(final List<Pokemon> list) {
         recyclerView = findViewById(R.id.my_recycler_view);
         adapter = new MyAdapter(this, list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ViewActivity.this);

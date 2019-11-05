@@ -2,31 +2,23 @@ package com.example.myapplication.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class RetroPokemon {
 
-    @SerializedName("name")
-    private String name;
-    @SerializedName("url")
-    private String url;
+    @SerializedName("results")
+    private List<Pokemon> results;
 
-    public RetroPokemon(String name, String url) {
-        this.name = name;
-        this.url = url;
+    public RetroPokemon(List<Pokemon> results) {
+        this.results = results;
     }
 
-    public String getName() {
-        return name;
+    public void setResults(List<Pokemon> results) {
+        this.results = results;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = "https://via.placeholder.com/150/92c952";
+    public List<Pokemon> getResults() {
+        return results;
     }
 }

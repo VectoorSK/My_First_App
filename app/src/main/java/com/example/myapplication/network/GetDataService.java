@@ -10,9 +10,9 @@ import retrofit2.http.GET;
 
 public interface GetDataService {
 
-    @GET("/photos")
-    Call<List<RetroPhoto>> getAllPhotos();
+    // @GET("/photos")
+    // Call<List<RetroPhoto>> getAllPhotos();
 
-    // @GET("/pokemon")
-    // Call<List<RetroPokemon>> getAllPokemons();
+    @GET("/api/v2/pokemon?offset=0&limit=151")
+    Call<RetroPokemon> getAllPokemons();
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.model.Pokemon;
 import com.example.myapplication.model.RetroPhoto;
 import com.example.myapplication.model.RetroPokemon;
 import com.jakewharton.picasso.OkHttp3Downloader;
@@ -82,14 +83,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> {
 
-    private List<RetroPhoto> dataList;
-    // private List<RetroPokemon> dataList;
+    //private List<RetroPhoto> dataList;
+    private List<Pokemon> dataList;
     private Context context;
+    private Picasso picasso;
 
-    public MyAdapter(Context context, List<RetroPhoto> dataList) {
- // public MyAdapter(Context context, List<RetroPokemon> dataList) {
+    //public MyAdapter(Context context, List<RetroPhoto> dataList) {
+    public MyAdapter(Context context, List<Pokemon> dataList) {
         this.context = context;
         this.dataList = dataList;
+
+        Picasso.Builder builder = new Picasso.Builder(context);
+        builder.downloader(new OkHttp3Downloader(context));
+        picasso = builder.build();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
@@ -120,13 +126,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, final int position) {
-        holder.txtTitle.setText(dataList.get(position).getTitle());
+        ///System.out.println(dataList.get(position).getResult());
+        holder.txtTitle.setText(dataList.get(position).getName());
      // holder.txtTitle.setText(dataList.get(position).getName());
-        holder.txtDesc.setText("test");
+        holder.txtDesc.setText(dataList.get(position).getUrl().substring(10));
 
-        Picasso.Builder builder = new Picasso.Builder(context);
-        builder.downloader(new OkHttp3Downloader(context));
-        builder.build().load(dataList.get(position).getThumbnailUrl())
+        picasso.load(dataList.get(position).getUrl())
                 .placeholder((R.drawable.ic_launcher_background))
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.coverImage);
