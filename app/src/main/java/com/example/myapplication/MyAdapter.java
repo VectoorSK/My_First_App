@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.model.Country;
 import com.example.myapplication.model.Pokemon;
 import com.example.myapplication.model.RetroPhoto;
 import com.example.myapplication.model.RetroPokemon;
@@ -84,12 +89,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> {
 
     //private List<RetroPhoto> dataList;
-    private List<Pokemon> dataList;
+    private List<Country> dataList;
     private Context context;
     private Picasso picasso;
 
     //public MyAdapter(Context context, List<RetroPhoto> dataList) {
-    public MyAdapter(Context context, List<Pokemon> dataList) {
+    public MyAdapter(Context context, List<Country> dataList) {
         this.context = context;
         this.dataList = dataList;
 
@@ -127,14 +132,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, final int position) {
         ///System.out.println(dataList.get(position).getResult());
-        holder.txtTitle.setText(dataList.get(position).getName());
-     // holder.txtTitle.setText(dataList.get(position).getName());
-        holder.txtDesc.setText(dataList.get(position).getUrl().substring(10));
+        holder.txtTitle.setText(dataList.get(position).getCountry());
+        // holder.txtTitle.setText(dataList.get(position).getName());
+        holder.txtDesc.setText(dataList.get(position).getDate());
+        //holder.coverImage.setImageBitmap(dataList.get(position).getFlagBitmap());
+        //holder.coverImage.setImageBitmap(doInBackground(dataList.get(position).getFlag()));
+        //picasso.load(dataList.get(position).getFlag())
+        //        .placeholder((R.drawable.ic_launcher_background))
+        //        .error(R.drawable.ic_launcher_background)
+        //        .into(holder.coverImage);
+        //picasso.load(dataList.get(position).getFlag()).into(holder.coverImage);
+    }
 
-        picasso.load(dataList.get(position).getUrl())
-                .placeholder((R.drawable.ic_launcher_background))
-                .error(R.drawable.ic_launcher_background)
-                .into(holder.coverImage);
+    protected Bitmap doInBackground(String url){
+        String urlOfImage = url;
+        Bitmap logo = null;
+        try{
+            InputStream is = new URL(urlOfImage).openStream();
+            logo = BitmapFactory.decodeStream(is);
+        }catch(Exception e){ // Catch the download exception
+            e.printStackTrace();
+        }
+        return logo;
     }
 
     @Override

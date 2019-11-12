@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.myapplication.model.Country;
 import com.example.myapplication.model.Pokemon;
 import com.example.myapplication.model.RetroPhoto;
 import com.example.myapplication.model.RetroPokemon;
@@ -81,19 +82,20 @@ public class ViewActivity extends AppCompatActivity {
 
         // Create handle for the RetrofitInstance interface
         GetDataService service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<RetroPokemon> call = service.getAllPokemons();
+        /*Call<RetroPokemon> call = service.getAllPokemons();*/
+        Call<List<Country>> call = service.getAllCountries();
         // Call<List<RetroPhoto>> call = service.getAllPhotos();
-        call.enqueue(new Callback<RetroPokemon>() {
+        call.enqueue(new Callback<List<Country>>() {
             @Override
             // public void onResponse(Call<List<RetroPhoto>> call, Response<List<RetroPhoto>> response) {
-            public void onResponse(Call<RetroPokemon> call, Response<RetroPokemon> response) {
+            public void onResponse(Call<List<Country>> call, Response<List<Country>> response) {
                 progressDialog.dismiss();
-                generateDataList(response.body().getResults());
+                generateDataList(response.body());
             }
 
             @Override
             // public void onFailure(Call<List<RetroPhoto>> call, Throwable t) {
-            public void onFailure(Call<RetroPokemon> call, Throwable t) {
+            public void onFailure(Call<List<Country>> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(ViewActivity.this, "Something went wrong... Please try later!", Toast.LENGTH_SHORT).show();
             }
@@ -102,7 +104,7 @@ public class ViewActivity extends AppCompatActivity {
 
     //Method to generate List of data using RecyclerView with custom adapter
     // private void generateDataList(final List<RetroPhoto> list) {
-    private void generateDataList(final List<Pokemon> list) {
+    private void generateDataList(final List<Country> list) {
         recyclerView = findViewById(R.id.my_recycler_view);
         adapter = new MyAdapter(this, list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(ViewActivity.this);

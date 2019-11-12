@@ -7,7 +7,8 @@ public class RetrofitClientInstance {
 
     private static Retrofit retrofit;
     // private static final String BASE_URL = "https://jsonplaceholder.typicode.com";
-    private static final String BASE_URL = "https://pokeapi.co/";
+    // private static final String BASE_URL = "https://pokeapi.co/";
+    private static final String BASE_URL = "https://raw.githubusercontent.com/";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
