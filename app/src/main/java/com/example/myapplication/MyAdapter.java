@@ -137,10 +137,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
         holder.txtDesc.setText(dataList.get(position).getDate());
         //holder.coverImage.setImageBitmap(dataList.get(position).getFlagBitmap());
         //holder.coverImage.setImageBitmap(doInBackground(dataList.get(position).getFlag()));
-        //picasso.load(dataList.get(position).getFlag())
-        //        .placeholder((R.drawable.ic_launcher_background))
-        //        .error(R.drawable.ic_launcher_background)
-        //        .into(holder.coverImage);
+        picasso.load(dataList.get(position).getFlag())
+                .placeholder((R.drawable.ic_launcher_background))
+                .error(R.drawable.ic_launcher_background)
+                .into(holder.coverImage);
         //picasso.load(dataList.get(position).getFlag()).into(holder.coverImage);
     }
 
